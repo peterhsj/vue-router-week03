@@ -1,20 +1,25 @@
 <script setup>
-  import { ref } from 'vue';
+  import { defineProps, defineEmits } from 'vue';
 
-  const imgUrl = ref('https://images.unsplash.com/photo-1558734918-dfc4fe470147?q=80&w=540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  defineProps(['cardContent'])
 
-  const num =ref(1);
-  const add = () => {
-    num.value += 1;
+  // 定義要 emit 的名稱
+  const emit = defineEmits(['emitTitle']);
+  // 1.執行 editOutTitle 發動一個名為 emitTitle 的 emit 將資料送出
+  const editOutTitle = () => {
+    // 2.參數只能傳一個
+    emit('emitTitle', '圖片')
   };
 </script>
 <template>
   <div class="card">
-    <img :src="imgUrl" class="card-img-top" alt="...">
+    <img :src="cardContent.imgUrl" class="card-img-top" alt="...">
     <div class="card-body">
-      <h5 class="card-title">Card title {{ num }}</h5>
-      <p class="card-text">aaaaaaa</p>
-      <a href="#" class="btn btn-primary" @click.prevent="add">Go somewhere</a>
+      <h5 class="card-title">{{ cardContent.title }}</h5>
+      <p class="card-text">{{ cardContent.content }}</p>
+      <input type="text" >
+      <a href="#" class="btn btn-primary" @click.prevent="emit('emitTitle', cardContent.title)">傳遞事件</a>
+
     </div>
   </div>
 </template>
